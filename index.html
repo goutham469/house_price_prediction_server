@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        select{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-success">House price prediction model</h1>
+    <div class="row m-5">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <form class="border border-secondary p-4">
+                <p>number of rooms in your house</p>
+                <input class="num_rooms" type="number" placeholder="num_rooms">
+                <p>number of people in your family</p>
+                <input class="num_people" type="number" placeholder="num_people">
+                <p>enter your house area in sq.ft</p>
+                <input class="house_area" type="number" placeholder="house_area">
+                <p>is there ac in your house</p>
+                <select class="is_ac" name="is_ac" id="">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <p>is there tv in your house</p>
+                <select class="is_tv" name="is_tv" id="">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <p>is your house own or rented</p>
+                <select class="is_own" name="is_own" id="">
+                    <option value="1">Own</option>
+                    <option value="0">Rented</option>
+                </select>
+                <p>enter your monthly income in Dollars : </p>
+                <input class="ave_monthly_income" type="number" placeholder="ave_monthly_income">
+                <p>enter no. of children you have : </p>
+                <p>put '0' if not married (or) has no children</p>
+                <input class="no_of_children" type="number" placeholder="no_of_children">
+                <p>Locality of living </p>
+                <select class="is_urban" name="is_urban" id="">
+                    <option value="1">Urban</option>
+                    <option value="0">Rural</option>
+                </select>
+                <br><br>
+                <button class="calculate1 btn btn-warning">Predict my monthly electricity Bill</button>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <p>Your predicted electricity Bill <ab class="value007"></ab></p>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.calculate1').addEventListener('click',async (event)=>{
+            event.preventDefault()
+            let no_of_rooms = document.querySelector('.num_rooms').value
+            let num_people = document.querySelector('.num_people').value
+            let house_area = document.querySelector('.house_area').value
+            let is_ac = document.querySelector('.is_ac').value
+            let is_tv = document.querySelector('.is_tv').value
+            let is_own = document.querySelector('.is_own').value
+            let no_of_children = document.querySelector('.no_of_children').value
+            let is_urban = document.querySelector('.is_urban').value
+            let ave_monthly_income = document.querySelector('.ave_monthly_income').value
+
+            const obj = {
+                num_rooms:Number(no_of_rooms),
+                num_people:Number(num_people),
+                housearea:Number(house_area),
+                is_ac:Number(is_ac),
+                is_tv:Number(is_tv),
+                is_flat:Number(is_own),
+                ave_monthly_income:Number(ave_monthly_income),
+                num_children:Number(no_of_children),
+                is_urban:Number(is_urban)
+            }
+            console.log(obj)
+            await fetch('http://127.0.0.1:5000/getBill',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(obj)
+            }).then(data=>data.json())
+            .then(data=>{
+                document.querySelector('.value007').textContent=String(data[0]);
+                document.querySelector('.value007').style.border="1px solid black"
+                document.querySelector('.value007').style.borderRadius="10px"
+                document.querySelector('.value007').style.padding="10px"
+                document.querySelector('.value007').style.backgroundColor="yellow"
+            })
+            
+        })
+    </script>
+</body>
+</html>

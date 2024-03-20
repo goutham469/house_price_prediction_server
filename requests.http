@@ -1,0 +1,55 @@
+GET http://127.0.0.1:5000
+###
+POST http://127.0.0.1:5000/getBill
+Content-Type: application/json
+
+{
+    "num_rooms" : 10,
+"num_people": 10,
+"housearea":1200,
+"is_ac":0,
+"is_tv":0,
+"is_flat":0,
+"ave_monthly_income":45,
+"num_children":0,
+"is_urban":0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+POST http://127.0.0.1:5000/postData
+Content-Type: application/json
+
+{
+    "name":"goutham reddy",
+    "rool_no":"22071a12k0",
+    "class":"IT-c"
+}
+###
+POST http://127.0.0.1:5000/add
+Content-Type: application/json
+
+{
+    "number1":100,
+    "number2":200
+}
